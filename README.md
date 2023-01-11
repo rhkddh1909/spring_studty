@@ -65,3 +65,90 @@
   - beans.xml과 같이 xml파일들은 resource 폴더 내에 있어야함
   - class를 beans.xml파일에  <bean>tag 를 활용하여 등록하여
 
+## IoC 컨테이너
+
+- Inversion of Control : 제어 역전
+- 일반적으로 프로그래밍을 작성할 때 프로그램이 흘러가는 흐름이나 생성되는 객체에 대한 제어권을 개발자가 제어권을 가지는 것과 달리 프레임워크가 가지는 것
+- 개발자가 코드의 흐름이나 객체 생성에 관련된 코드를 프로그래밍 코드에 직접 작성하는 것이 아닌 프레임워크가 사용하는 파일에 작성하면 이를 토대로 프레임워크가 객체를 생성하여 반환하고 코드가 동작하는 순서를 결정
+- MetaData(xml이나 java코드)를 토대로 만들어 놓은 클래스에 객체를 만들어 반환 하는 역할
+- BeanFactory(구)
+  - 클래스를 통해 객체를 생성하고 이를 전달한다.
+  - 상속 등 객체 간의 관계를 형성하고 관리한다.
+  - Bean에 관련된 설정을 위한 xml 파일은 즉시 로딩하지만 객체는 개발자가 요구 할 때 생성
+  - XmlBeanFactory
+- ApplicationContest(신)
+  - 클래스를 통해 객체를 생성하고 이를 전달한다.
+  - 상속 등 객체 간의 관계를 형성하고 관리한다
+  - 국제화 지원 등 문자열에 관련된 다양한 기능을 제공한다.
+  - Bean에 관련된 설정을 위한 xml 파일은 즉시 로딩하면서 객체를 미리 생성해서 가지고 있다.
+  - ClassPathXmlApplicationContext
+  - FileSystemXmlApplicationContext
+  - XmlWebApplicationContext
+
+## POJO (자바에서는 bean이라 부른다)
+
+- 오래된 방식의 간단한 [자](https://ko.wikipedia.org/wiki/%EC%9E%90%EB%B0%94_(%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D_%EC%96%B8%EC%96%B4))바 오브젝트
+- 자바 모델이나, 기능 프레임워크 등에 따르지 않고 홀로 독립적이며 단순한 기능만을 가진 객체
+- 특정한 환경과 기술에 종속되지 않고 필요에 따라 재사용 가능하다.
+
+  →특정규약에 종속되지 않는다
+
+  →특정환경에 종속되지 않는다
+
+  →객체지향 원리에 충실해야한다.
+
+- 어떠한 프로젝트에 직접적으로 의존하는 순간 pojo라고 할 수 없다. 특정 기술에 종속되기 때문이다.
+- 어노테이션이 제거되었을 경우 pojo로 돌아간다면 이를 pojo로 간주함
+- 특정 기술과 환경에 종속되어 의존하게 된 자바 코드는 가독성이 떨어져 유지보수에 어려움
+- psa를 통해 pojo를 유지한다
+
+```java
+public class MyPojo {
+    private String name;
+    private int age;
+    
+    public String getName() {
+    	return name;
+    }
+    public String getAge() {
+    	return age;
+    }
+    public void setName(String name) {
+    	this.name = name;
+    }
+    public void setAge(int age) {
+    	this.age = age;
+    }
+}
+```
+
+1) pojo의 장점
+
+→ 깔끔한 코드
+
+→ 테스트 용이
+
+→ 객체지향 설계 자유롭게 활용
+
+2)pojo프레임워크
+
+→ hibernate pojo프레임워크의 가장 대표적인 예
+
+### **Rich Domain Model**
+
+- POJO의 자바 오브젝트가 가진 기본적인 특징은 하나의 오브젝트 안에 상태(State)와 행위(Behavior)을 모두 가지고 있습니다. 즉, **인스턴스 변수**와 **로직을 가진 메소드**가 있습니다.
+- 객체지향 원리에 충실하게 도메인 모델을 만드는 것을 풍성한 도메인 모델(Rich Domain Model)이라고 이야기합니다.
+
+## PSA**(Portable Service Abstraction)**
+
+- 환경의 변화와 관계없이 일관된 방식의 기술로의 접근 환경을 제공하는 추상화 구조(POJO)
+- 어노테이션을 활용하여 객체를 POJO기반으로 한번더 추상화
+- Spring Web Mvc
+  - **@Controller** 어노테이션을 사용하면 **요청을 매핑할 수 있는 컨트롤러 역할을 수행**
+  - 서블릿을 Low level 로 개발하지 않고도, Spring Web MVC를 사용하면 이렇게 서블릿을 간편하게 개발
+  - HttpServlet을 상속받고 **doGet(), doPost()**를 구현하는 등의 작업을 하지 않아도 됨
+- Spring Transaction
+  - **@Transactional** 어노테이션을 사용하면 conn.setAutoCommit(false) 이나 conn.commit() 등을 사용하지 않고 트랜잭션 관리가 가능
+- Spring Cache
+  - JCacheManager, ConcurrentMapCacheManager, EhCacheCacheManager와 같은 여러가지 구현체 사용 가능
+  - **@Cacheable** 어노테이션을 붙여줌으로써 구현체를 크게 신경쓰지 않아도 필요에 따라 바꿔 사용 가능
