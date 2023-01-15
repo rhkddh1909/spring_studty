@@ -152,3 +152,18 @@ public class MyPojo {
 - Spring Cache
   - JCacheManager, ConcurrentMapCacheManager, EhCacheCacheManager와 같은 여러가지 구현체 사용 가능
   - **@Cacheable** 어노테이션을 붙여줌으로써 구현체를 크게 신경쓰지 않아도 필요에 따라 바꿔 사용 가능
+
+## Bean 생성하기
+
+- Bean은 singleton
+- Spring에서는 사용할 Bean 객체를 Bean configurtion file에 정의를 하고 필요할 때 객체를 가져와 사용하는 방벙
+- bean 태그 : 사용할 bean을 정의하는 태그
+- bean 태그의 기본 속성
+  - calss : 객체를 생성하기 위해 사용할 클래스를 지정한다.
+  - id : Bean 객체를 가져오기 위해 사용하는 이름
+  - lazy-init : 싱글톤인 경우 xml을 로딩할 때 객체 생성 여부를 설정
+    - true : xml 로딩 시 객체를 생성하지 않고 객체를 가져올 떄 생성
+  - scope : 객체의 범위를 설정
+    - singleton : 객체를 하나만 생성해서 사용
+    - prototype : 객체를 가져올 때 마다 객체를 생성
+- Spring 에서는 프로그램에서 사용할 객체를 bean configuration 파일에 정의하여 사용
