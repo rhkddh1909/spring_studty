@@ -167,3 +167,17 @@ public class MyPojo {
     - singleton : 객체를 하나만 생성해서 사용
     - prototype : 객체를 가져올 때 마다 객체를 생성
 - Spring 에서는 프로그램에서 사용할 객체를 bean configuration 파일에 정의하여 사용
+
+## Bean 객체의 생명주기
+
+- Spring의 Bean은 다음과 같은 상황일 때 객체가 생성
+  - Singleton인 경우 xml 파일을 로딩 할 때 객체가 생성
+  - Singleton이고 lazy-init 속성이 true인 경우 getBean 메서드를 사용할 대 객체가 생성
+  - prototype 일 경우 getBean 메서드를 사용할 때 객체 생성
+- Spring Bean은 IoC 컨테이너가 종료 될 때 객체가 소멸
+- init-method : 생성자 호출 이후 자동 호출
+- destroy-method : 객체가 소멸할 때 자동 호출
+- default-init-method : init-methdo를 설정하지 않은 경우 자동으로 호출
+- default-destroy-method : destroy-method를 설정하지 않은 경우 자동으로 호출
+- 메서드가 없을 경우
+  - 모든 메서드(init-method, destroy-method, default-init-method , default-destroy-method )에서 각 메서드가 정의 되어 있지 않을때 오류가 발생
