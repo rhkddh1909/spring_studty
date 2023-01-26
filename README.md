@@ -181,3 +181,12 @@ public class MyPojo {
 - default-destroy-method : destroy-method를 설정하지 않은 경우 자동으로 호출
 - 메서드가 없을 경우
   - 모든 메서드(init-method, destroy-method, default-init-method , default-destroy-method )에서 각 메서드가 정의 되어 있지 않을때 오류가 발생
+
+## BeanPostProcessor
+
+- bean 객체를 정의할 때 init-method 속성을 설정하면 객체가 생성될 때 자동으로 호출될 메서드를 지정
+- 이 때 BeanPostProcessor 인터페이스를 구현한 클래스를 정의하면 Bean 객체를 생성할 때 호출될 init 메서드 호출을 가로채 다른 메서드를 호출할 수 있음
+  - postProcessBeforeInitialization → init-method에 지정된 메서드가 호출되기 전에 호출
+  - postProcessAfterInitialization → init-method에 지정된 메서드가 호출된 후에 호출
+  - init-method 가 지정되어 있지 않더라도 자동으로 호출
+- Spring 에서는 객체가 생성될 때 init-method로 지정된 메서드가 호출되기 전, 후에 다른 메서드를 호출할 수 있도록 지원하고 있다.
